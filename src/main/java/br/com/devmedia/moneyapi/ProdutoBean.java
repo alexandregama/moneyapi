@@ -1,5 +1,6 @@
 package br.com.devmedia.moneyapi;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -17,6 +18,10 @@ public class ProdutoBean {
 	private Produtos produtos;
 	
 	private List<Produto> lista;
+	
+	private BigDecimal totalEmReal = BigDecimal.ZERO;
+	
+	private BigDecimal totalEmDolar  = BigDecimal.ZERO;
 	
 	@Inject
 	public ProdutoBean(Produtos produtos) {
@@ -37,8 +42,27 @@ public class ProdutoBean {
 	public List<Produto> getLista() {
 		if (lista == null) {
 			lista = produtos.getTodosOsProdutos();
+			
+			if (lista != null) {
+				for (Produto produto : lista) {
+					if (produto.getMoeda().getCurrencyCode().equals("BRL")) {
+						totalEmReal = totalEmReal.add(produto.getPreco());
+					}
+					else if (produto.getMoeda().getCurrencyCode().equals("USD")) {
+						totalEmDolar = totalEmDolar.add(produto.getPreco());
+					}
+				}
+			}
 		}
 		return lista;
+	}
+	
+	public BigDecimal getTotalEmReal() {
+		return totalEmReal;
+	}
+	
+	public BigDecimal getTotalEmDolar() {
+		return totalEmDolar;
 	}
 
 	public Produto getProduto() {
