@@ -25,6 +25,13 @@
 			<h:outputLabel value="Preço" for="preco"/>
 			<h:inputText id="preco" value="#{produtoBean.produto.preco}"/>
 			
+			<h:outputLabel value="Moeda" for="moeda"/>
+			<h:selectOneMenu value="#{produtoBean.produto.moeda}">
+				<f:selectItem itemLabel="Real" itemValue="BRL"/>
+				<f:selectItem itemLabel="Dólar" itemValue="USD"/>
+				<f:converter converterId="moedaConverter"/>
+			</h:selectOneMenu>
+			
 			<h:commandButton value="Cadastrar" action="#{produtoBean.salva}"/>
 		</h:panelGrid>
 	</h:form>
@@ -42,6 +49,10 @@
 			<h:column>
 				<f:facet name="header">Preço</f:facet>
 				<h:outputText value="#{produto.preco}"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Moeda</f:facet>
+				<h:outputText value="#{produto.moeda}"/>
 			</h:column>
 		</h:dataTable>
 	</h:form>
