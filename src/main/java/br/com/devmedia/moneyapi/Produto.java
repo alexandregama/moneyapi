@@ -1,8 +1,8 @@
 package br.com.devmedia.moneyapi;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Currency;
+
+import javax.money.MonetaryAmount;
 
 public class Produto implements Serializable {
 
@@ -14,14 +14,12 @@ public class Produto implements Serializable {
 	
 	private String descricao;
 	
-	private BigDecimal preco;
-	
-	private Currency moeda;
+	private MonetaryAmount preco;
 	
 	@Override
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", descricao="
-				+ descricao + ", preco=" + preco + ", moeda=" + moeda + "]";
+				+ descricao + ", preco=" + preco + "]";
 	}
 
 	public String getNome() {
@@ -40,28 +38,20 @@ public class Produto implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public BigDecimal getPreco() {
+	public MonetaryAmount getPreco() {
 		return preco;
 	}
-
-	public void setPreco(BigDecimal preco) {
+	
+	public void setPreco(MonetaryAmount preco) {
 		this.preco = preco;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Currency getMoeda() {
-		return moeda;
-	}
-
-	public void setMoeda(Currency moeda) {
-		this.moeda = moeda;
 	}
 	
 }

@@ -22,15 +22,17 @@
 			<h:outputLabel value="Descrição" for="descricao"/>
 			<h:inputText id="descricao" value="#{produtoBean.produto.descricao}"/>
 			
-			<h:outputLabel value="Preço" for="preco"/>
-			<h:inputText id="preco" value="#{produtoBean.produto.preco}"/>
-			
 			<h:outputLabel value="Moeda" for="moeda"/>
-			<h:selectOneMenu value="#{produtoBean.produto.moeda}">
+			<h:selectOneMenu value="#{produtoBean.moeda}" id="moeda" binding="#{moeda}">
 				<f:selectItem itemLabel="Real" itemValue="BRL"/>
 				<f:selectItem itemLabel="Dólar" itemValue="USD"/>
-				<f:converter converterId="moedaConverter"/>
 			</h:selectOneMenu>
+			
+			<h:outputLabel value="Preço" for="preco"/>
+			<h:inputText id="preco" value="#{produtoBean.produto.preco}">
+				<f:converter converterId="moneyApiConverter" />
+				<f:attribute name="moeda" value="#{moeda}"/>
+			</h:inputText>
 			
 			<h:commandButton value="Cadastrar" action="#{produtoBean.salva}"/>
 		</h:panelGrid>
@@ -50,16 +52,9 @@
 				<f:facet name="header">Preço</f:facet>
 				<h:outputText value="#{produto.preco}"/>
 			</h:column>
-			<h:column>
-				<f:facet name="header">Moeda</f:facet>
-				<h:outputText value="#{produto.moeda}"/>
-			</h:column>
 		</h:dataTable>
 	</h:form>
 	
-	<h2>Totais</h2>
-	Real: <h:outputText value="#{produtoBean.totalEmReal}"/> <br/>
-	Dólar: <h:outputText value="#{produtoBean.totalEmDolar}"/>
 </h:body>
 
 </html>
