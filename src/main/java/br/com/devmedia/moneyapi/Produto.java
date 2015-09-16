@@ -21,7 +21,7 @@ public class Produto implements Serializable {
 		return "Produto [id=" + id + ", nome=" + nome + ", descricao="
 				+ descricao + ", preco=" + preco + "]";
 	}
-
+	
 	public String getNome() {
 		return nome;
 	}
