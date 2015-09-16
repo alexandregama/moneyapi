@@ -43,37 +43,32 @@ public class ProdutoBean {
 	}
 	
 	public BigDecimal getValorTotalReal() {
-		CurrencyUnit BRL = Monetary.getCurrency("BRL");
-		if (lista != null) {
-			List<MonetaryAmount> moneys = new ArrayList<>();
-			for (Produto produto : lista) {
-				moneys.add(produto.getPreco());
-			}
-			
-			Optional<MonetaryAmount> somaOptional = moneys.stream().filter(MonetaryFunctions.isCurrency(BRL)).reduce(sum());
-			if (somaOptional.isPresent()) {
-				MonetaryAmount soma = somaOptional.get();
-				valorTotalReal = new BigDecimal(soma.getNumber().toString());
-			}
-		}
+		CurrencyUnit real = Monetary.getCurrency("BRL");
+		valorTotalReal = somaValorTotalPelaMoeda(real);
 		return valorTotalReal;
 	}
 	
 	public BigDecimal getValorTotalDolar() {
-		CurrencyUnit USD = Monetary.getCurrency("USD");
+		CurrencyUnit dolar = Monetary.getCurrency("USD");
+		valorTotalDolar = somaValorTotalPelaMoeda(dolar);
+		return valorTotalDolar;
+	}
+	
+	private BigDecimal somaValorTotalPelaMoeda(CurrencyUnit moeda) {
+		BigDecimal total = BigDecimal.ZERO;
 		if (lista != null) {
 			List<MonetaryAmount> moneys = new ArrayList<>();
 			for (Produto produto : lista) {
 				moneys.add(produto.getPreco());
 			}
 			
-			Optional<MonetaryAmount> somaOptional = moneys.stream().filter(MonetaryFunctions.isCurrency(USD)).reduce(sum());
+			Optional<MonetaryAmount> somaOptional = moneys.stream().filter(MonetaryFunctions.isCurrency(moeda)).reduce(sum());
 			if (somaOptional.isPresent()) {
 				MonetaryAmount soma = somaOptional.get();
-				valorTotalDolar = new BigDecimal(soma.getNumber().toString());
+				total = new BigDecimal(soma.getNumber().toString());
 			}
 		}
-		return valorTotalDolar;
+		return total;
 	}
 	
 	public void salva() {
