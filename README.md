@@ -1,5 +1,4 @@
-# moneyapi
-Money API
+# Money API
 
 ### To Do
 
